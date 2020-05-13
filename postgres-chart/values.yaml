@@ -1,5 +1,5 @@
 # Postgres image URL
-image: registry.access.redhat.com/rhscl/postgresql-10-rhel7
+image: registry.access.redhat.com/rhscl/postgresql-10-rhel7:1
 # To pass image pull secrets
 imagePullSecrets: []
 container:
