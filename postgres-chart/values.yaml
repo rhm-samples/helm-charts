@@ -1,0 +1,17 @@
+# Postgres image URL
+image: registry.access.redhat.com/rhscl/postgresql-10-rhel7
+# To pass image pull secrets
+imagePullSecrets: []
+container:
+  name: primary
+  port: 5432
+replicaCount: 1
+pv:
+  storage: 2Gi
+pvc:
+  name: primary-pvc
+resources: {}
+service:
+  port: 80
+  type: ClusterIP
+podSecurityContext: {}

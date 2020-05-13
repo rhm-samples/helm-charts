@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    app: postgres-chart
+    instance: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: postgres-chart
+      instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: postgres-chart
+        instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{.Values.container.name}}
+        image: "{{.Values.image}}"
+        ports:
+        - containerPort: {{.Values.container.port}}
+          protocol: TCP
+        env:
+          - name: POSTGRESQL_USER
+            value: primary
+          - name: POSTGRESQL_PASSWORD
+            value: admin123
+          - name: POSTGRESQL_DATABASE
+            value: pgdb            
+        volumeMounts:
+        - name: postgresql-data
+          mountPath: "/var/lib/postgresql/data"
+      volumes:
+      - name: postgresql-data
+        persistentVolumeClaim:
+          claimName: "{{.Values.pvc.name}}"
