@@ -5,7 +5,7 @@
 # Variables for Flask Server
 flask:
   image: quay.io/rhm_samples/flask-server:v0.0.1
-  # To pass image pull secrets
+  # To pass image pull secrets (if any)
   imagePullSecrets: []
   replicaCount: 1
   
@@ -16,7 +16,7 @@ flask:
 # Variables for Vue Client
 vue:
   image: quay.io/rhm_samples/flask-vue-client:v0.0.1
-  # To pass image pull secrets
+  # To pass image pull secrets (if any)
   imagePullSecrets: []
   replicaCount: 1
   
