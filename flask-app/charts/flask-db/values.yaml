@@ -9,7 +9,7 @@ image: quay.io/rhm_samples/flask-postgres:v0.0.1
 # To pass image pull secrets
 imagePullSecrets: []
 
-serviceAccountName: flask-service-account
+serviceAccountName: flask-app-operator
 
 # Persistent Volume Capacity
 storageCapacity: 2Gi
