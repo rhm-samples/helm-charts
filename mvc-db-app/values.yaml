@@ -1,0 +1,27 @@
+# Default values for mvc-db-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Variables for Backend
+backend:
+  image: quay.io/rhm_samples/nodejs-guestbook-backend:v0.0.1
+  # To pass image pull secrets
+  imagePullSecrets: []
+  replicaCount: 1
+  
+  service:
+    type: NodePort
+    port: 8080
+    targetPort: http-server
+
+# Variables for Frontend
+frontend:
+  image: quay.io/rhm_samples/nodejs-guestbook-frontend:v0.0.1
+  # To pass image pull secrets
+  imagePullSecrets: []
+  replicaCount: 1
+  
+  service:
+    type: NodePort
+    port: 8080
+    targetPort: http-server

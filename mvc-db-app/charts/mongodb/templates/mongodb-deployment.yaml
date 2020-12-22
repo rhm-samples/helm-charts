@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-guestbook-mongodb
+  labels:
+    app: nodejs-guestbook
+    tier: db
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: nodejs-guestbook
+      tier: db
+  template:
+    metadata:
+      labels:
+        app: nodejs-guestbook
+        tier: db
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: mvc-db-app-operator
+      containers:
+      - name: mongo
+        image: "{{ .Values.image }}"
+        ports:
+        - name: http-server
+          containerPort: 8080
+        env:
+          - name: MONGODB_USER
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-credentials
+                key: user
+          - name: MONGODB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-credentials
+                key: password
+        volumeMounts:
+        - mountPath: /var/lib/mongodb/data
+          name: mongodb-volume-mount
+          subPath: mongodb
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: mongodb-volume-mount
+        persistentVolumeClaim:
+          claimName: mongodb-pvc
