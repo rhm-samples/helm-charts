@@ -2,6 +2,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: nodejs-guestbook-frontend-route
+  namespace: {{ .Release.Namespace }}
   labels:
     app: nodejs-guestbook
     tier: frontend
