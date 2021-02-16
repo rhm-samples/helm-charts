@@ -5,6 +5,7 @@ metadata:
     app: nodejs-guestbook
     tier: frontend
   name: nodejs-guestbook-frontend
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
   selector:
