@@ -5,6 +5,7 @@ metadata:
     app: nodejs-guestbook
     tier: backend
   name: nodejs-guestbook-backend
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.backend.replicaCount }}
   selector:
